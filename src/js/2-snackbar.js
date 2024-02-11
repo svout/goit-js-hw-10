@@ -24,13 +24,11 @@ document.querySelector(".form").addEventListener("submit", function (event) {
   promise.then(
     (delay) => {
       iziToast.success({
-        title: "Success",
         message: `✅ Fulfilled promise in ${delay}ms`,
       });
     },
     (delay) => {
       iziToast.error({
-        title: "Error",
         message: `❌ Rejected promise in ${delay}ms`,
       });
     }

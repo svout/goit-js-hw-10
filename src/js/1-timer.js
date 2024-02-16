@@ -3,9 +3,11 @@ const dataDays = document.querySelector('[data-days]');
 const dataHours = document.querySelector('[data-hours]');
 const dataMinutes = document.querySelector('[data-minutes]');
 const dataSeconds = document.querySelector('[data-seconds]');
-const input = document.querySelector('input[type="text"]');
+const input = document.getElementById('datetime-picker'); // Вибір поля вводу за ID
 
 startBtn.disabled = true;
+
+let userSelectedDate = new Date(); // Початкова дата, яка вибирається за замовчуванням
 
 const options = {
     enableTime: true,
@@ -21,12 +23,12 @@ const options = {
             updateStartBtn(false);
         } else {
             updateStartBtn(true);
-            userSelectedDate = selectedDates[0];
+            userSelectedDate = new Date(selectedDates[0]); // Зберігаємо обраний об'єкт Date
         }
     },
 };
 
-let userSelectedDate = new flatpickr('input', options);
+let flatpickrInstance = flatpickr(input, options); // Ініціалізація flatpickr
 
 class Timer {
     constructor(updateTimer) {
@@ -47,6 +49,8 @@ class Timer {
     stop() {
         clearInterval(this.intervalId);
         this.isActive = false;
+        updateStateInput(true);
+        updateStartBtn(true);
     }
 
     #msToTime(s) {
@@ -55,14 +59,16 @@ class Timer {
         const secs = s % 60;
         s = (s - secs) / 60;
         const mins = s % 60;
-        const hrs = (s - mins) / 60;
-        const days = Math.floor(hrs / 24);
+        s = (s - mins) / 60;
+        const hrs = s % 24;
+        const days = (s - hrs) / 24;
 
         return { days, hrs, mins, secs };
     }
 
+
     updateTime() {
-        const target = userSelectedDate.getTime();
+        const target = userSelectedDate.getTime(); // Отримуємо час в мілісекундах
         const now = Date.now();
         if (target <= now) {
             this.stop();
@@ -70,7 +76,7 @@ class Timer {
         }
         const diff = target - now;
         const timeObj = this.#msToTime(diff);
-        this.updateTimer(timeObj); 
+        this.updateTimer(timeObj);
     }
 }
 

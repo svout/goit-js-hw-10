@@ -64,3 +64,16 @@ button[data-start]:hover {
     font-size: 18px;
     color: #555;
 }
+button#startBtn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+button#startBtn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+

@@ -1,13 +1,14 @@
-const startBtn = document.querySelector('button[type="button"]');
 const dataDays = document.querySelector('[data-days]');
 const dataHours = document.querySelector('[data-hours]');
 const dataMinutes = document.querySelector('[data-minutes]');
 const dataSeconds = document.querySelector('[data-seconds]');
-const input = document.getElementById('datetime-picker'); // Вибір поля вводу за ID
+const startBtn = document.getElementById('startBtn');
+const input = document.getElementById('datetime-picker');
+
 
 startBtn.disabled = true;
 
-let userSelectedDate = new Date(); // Початкова дата, яка вибирається за замовчуванням
+let userSelectedDate = new Date(); 
 
 const options = {
     enableTime: true,
@@ -23,12 +24,12 @@ const options = {
             updateStartBtn(false);
         } else {
             updateStartBtn(true);
-            userSelectedDate = new Date(selectedDates[0]); // Зберігаємо обраний об'єкт Date
+            userSelectedDate = new Date(selectedDates[0]); 
         }
     },
 };
 
-let flatpickrInstance = flatpickr(input, options); // Ініціалізація flatpickr
+let flatpickrInstance = flatpickr(input, options); 
 
 class Timer {
     constructor(updateTimer) {
@@ -68,7 +69,7 @@ class Timer {
 
 
     updateTime() {
-        const target = userSelectedDate.getTime(); // Отримуємо час в мілісекундах
+        const target = userSelectedDate.getTime(); 
         const now = Date.now();
         if (target <= now) {
             this.stop();
@@ -109,3 +110,4 @@ function updateStartBtn(isActive) {
 function updateStateInput(isActive) {
     input.disabled = !isActive;
 }
+
